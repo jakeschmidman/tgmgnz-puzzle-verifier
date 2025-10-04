@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Puzzle Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 40px;
+    }
+    select, input {
+      font-size: 16px;
+      padding: 5px;
+      margin: 10px;
+    }
+    button {
+      font-size: 16px;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Happy Birthday!</h1>
+  <p>If you'd like to check your answers, you're in the right place.</p>
+  <p>(Please don't inspect the page... cheating is no fun :/)</p>
+
+  <label for="puzzle">Select Puzzle:</label>
+  <select id="puzzle">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+  </select>
+
+  <input type="text" id="answer" placeholder="Enter your answer"
+       onkeypress="if (event.key === 'Enter') checkAnswer()">
+  <button onclick="checkAnswer()">Submit</button>
+
+  <div id="result"></div>
+
+  <script>
+    // Track progress for puzzle 5
+    let puzzle5Answers = new Set();
+
+    function checkAnswer() {
+      const puzzle = document.getElementById("puzzle").value;
+      const input = document.getElementById("answer").value.trim().toLowerCase();
+      const result = document.getElementById("result");
+
+      let message = "Incorrect. Try again!";
+
+      switch (puzzle) {
+        case "1":
+          if (input === "zealand") message = "Correct!";
+          break;
+        case "2":
+          if (input === "mailroom") message = "Correct!";
+          break;
+        case "3":
+          if (input === "after") message = "Correct!";
+          break;
+        case "4":
+          if (input === "greatest") message = "Correct!";
+          break;
+        case "5":
+          if (input === "encore" || input === "hinge") {
+            puzzle5Answers.add(input);
+            if (puzzle5Answers.size === 1) {
+              message = "Correct! But there's something you haven't tried...";
+            } else if (puzzle5Answers.size === 2) {
+              message = "Correct! You've found both answers!";
+            }
+          }
+          break;
+        case "6":
+          if (input === "pirate") message = "Correct!";
+          break;
+      }
+
+      result.textContent = message;
+    }
+  </script>
+</body>
+</html>
